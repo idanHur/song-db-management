@@ -54,7 +54,7 @@ export class SongService {
         return await this.songRepository.find();
       }
 
-      async findAllOrderByBand(): Promise<Song[]> {
+      async findAllOrderdByBand(): Promise<Song[]> {
         return await this.songRepository.find({ 
             order: { band: 'ASC' } // Get the songs ordered by the Band name.
         }); 
