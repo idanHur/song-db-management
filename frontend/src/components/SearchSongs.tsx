@@ -6,39 +6,21 @@ const SearchSongs: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<Song[]>([]);
 
-  const handleSearchByBand = async () => {
+  const fetchData = async (method: () => Promise<Song[]>) => {
     try {
-      const data = await getSongsByBand(searchTerm);
+      const data = await method();
       setResults(data);
     } catch (error) {
-      console.error('Failed to fetch songs by band:', error);
+      console.error('Failed to fetch data:', error);
     }
   };
 
-  const handleSearchByYear = async () => {
-    try {
-      const data = await getSongsByYear(Number(searchTerm));
-      setResults(data);
-    } catch (error) {
-      console.error('Failed to fetch songs by year:', error);
-    }
-  };
-  const handleShowAllBandsByName = async () => {
-    try {
-      const data = await getAllSongsOrderByBand();
-      setResults(data);
-    } catch (error) {
-      console.error('Failed to fetch songs ordered by name:', error);
-    }
-  };
-  const handleShowAllBands = async () => {
-    try {
-      const data = await getAllSongs();
-      setResults(data);
-    } catch (error) {
-      console.error('Failed to fetch all bands:', error);
-    }
-  };
+  const buttonActions = [
+    { label: 'Search by Band', method: () => getSongsByBand(searchTerm) },
+    { label: 'Search by Year', method: () => getSongsByYear(Number(searchTerm)) },
+    { label: 'Show all bands ordered by name', method: getAllSongsOrderByBand },
+    { label: 'Show all bands', method: getAllSongs }
+  ];
 
   return (
     <div className='flex flex-col items-center justify-center w-full h-full'>
@@ -53,14 +35,14 @@ const SearchSongs: React.FC = () => {
         />
       </div>
       <div className='flex flex-col md:flex-row items-center self-center my-2'>
-        <button className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:mr-1 md:mb-0 mb-1 rounded-lg' 
-        onClick={handleSearchByBand}>Search by Band</button>
-        <button className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:mx-1 md:my-0 my-1 rounded-lg' 
-        onClick={handleSearchByYear}>Search by Year</button>
-        <button className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:mx-1 md:my-0 my-1 rounded-lg' 
-        onClick={handleShowAllBandsByName}>Show all bands ordered by name</button>
-        <button className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:ml-1 md:mt-0 mt-1 rounded-lg' 
-        onClick={handleShowAllBands}>Show all bands</button>
+        {buttonActions.map((action, index) => (
+          <button 
+            key={index}
+            className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:mx-1 md:my-0 my-1 rounded-lg' 
+            onClick={() => fetchData(action.method)}>
+            {action.label}
+          </button>
+        ))}
       </div>
       <SongsTable songsData={results} />
     </div>

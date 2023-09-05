@@ -4,20 +4,17 @@ interface NavigationBarProps {
   setShowAddSong: (value: boolean) => void;
 }
 
-const NavigationBar: React.FC<NavigationBarProps> = ({ setShowAddSong }) => {
+
+  const NavigationBar: React.FC<NavigationBarProps> = ({ setShowAddSong }) => {
     return (
-      <nav className="flex items-center justify-between bg-teal-500 p-6 w-full">
-          <div className="flex items-center text-white mr-6">
-              <span className="font-semibold text-xl tracking-tight">Song Search</span>
-          </div>
-          <div className="flex items-center">
-              <button onClick={() => setShowAddSong(true)} className="mt-4 inline-block text-teal-200 hover:text-white mr-4">
-                  Add Song
-              </button>
-              <button onClick={() => setShowAddSong(false)} className="mt-4 inline-block text-teal-200 hover:text-white mr-4">
-                  Search Songs
-              </button>
-          </div>
+      <nav className="flex items-center bg-teal-500 p-6 w-full">
+          <span className="font-semibold text-2xl text-white tracking-tight mr-6">Song Search</span>
+          <button onClick={() => setShowAddSong(true)} className="mt-3 inline-block text-teal-100 hover:text-white mr-4">
+              Add Song
+          </button>
+          <button onClick={() => setShowAddSong(false)} className="mt-3 inline-block text-teal-100 hover:text-white mr-4">
+              Search Songs
+          </button>
       </nav>
     );
   };

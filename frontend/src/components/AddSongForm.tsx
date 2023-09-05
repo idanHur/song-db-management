@@ -37,7 +37,7 @@ const AddSongForm: React.FC = () => {
   return (
     <div className="flex flex-col items-center h-screen pt-1/4">
       <div className="flex flex-col items-center justify-center w-full max-w-xs">
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="songName">
               Song Name:
