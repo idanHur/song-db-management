@@ -12,4 +12,14 @@ export class SongService {
         private songRepository: Repository<Song>,
       ) {}
 
+      async findAll(): Promise<Song[]> {
+        return await this.songRepository.find();
+      }
+      async findAllByBand(): Promise<Song[]> {
+        return await this.songRepository.find({ order: { band: 'ASC' } }); // Get the songs ordered by the Band name.
+      }
+
+      async addSong(song: Song): Promise<Song> {
+        return await this.songRepository.save(song);
+      }
   }
