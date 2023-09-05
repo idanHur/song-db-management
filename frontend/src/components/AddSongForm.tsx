@@ -19,7 +19,7 @@ const AddSongForm: React.FC = () => {
 
     const newSong: Song = {
       songName: songName,
-      bandName: band,
+      band: band,
       year: yearAsNumber
     }
     try {

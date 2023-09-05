@@ -18,9 +18,9 @@ const SongsTable: React.FC<SongsTableProps> = ({ songsData }) => {
           </tr>
         </thead>
         <tbody>
-          {songsData.sort((a, b) => a.bandName.localeCompare(b.bandName)).map(song => (
+          {songsData.map(song => (
             <tr key={song.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-              <td className="px-6 py-4">{song.bandName}</td>
+              <td className="px-6 py-4">{song.band}</td>
               <td className="px-6 py-4">{song.songName}</td>
               <td className="px-6 py-4">{song.year}</td>
             </tr>

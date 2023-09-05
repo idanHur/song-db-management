@@ -2,11 +2,11 @@ import { json } from "stream/consumers";
 
 export interface Song {
     id?: number
-    bandName: string;
+    band: string;
     songName: string;
     year: number;  
   }
-const BASE_URL = '/songs';  
+const BASE_URL = 'http://localhost:3000/songs';  
 
 // Fetch all songs
 export const getAllSongs = async (): Promise<Song[]> => {
