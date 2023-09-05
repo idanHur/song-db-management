@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { SongService } from '../services/song.service';
 import { Song } from '../entities/song.entity';
 
@@ -10,21 +10,25 @@ export class SongController {
     async getAllSongs(): Promise<Song[]> {
         return this.songService.findAll();
     }
-    @Get()
+
+    @Get('orderByBand')
     async getAllSongsOrderByBand(): Promise<Song[]> {
         return this.songService.findAllOrderdByBand();
     }
-    @Get(':bandName')
+
+    @Get('byBand/:bandName')
     async getAllSongsByBand(@Param('bandName') bandName: string): Promise<Song[]> {
         return this.songService.findSongsByBand(bandName);
     }
-    @Get(':year')
+
+    @Get('byYear/:year')
     async getAllSongsByYear(@Param('year') year: number): Promise<Song[]> {
         return this.songService.findSongsByYear(year);
     }
-    @Get()
-    async getSpecificSong(@Body() song: Partial<Song>): Promise<Song[]> {
-        return this.songService.findSpecificSong(song.songName, song.band);
+
+    @Get('specificSong')
+    async getSpecificSong(@Query('songName') songName: string, @Query('band') band: string): Promise<Song[]> {
+        return this.songService.findSpecificSong(songName, band);
     }
 
     @Post()
