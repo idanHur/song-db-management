@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post} from '@nestjs/common';
 import { SongService } from '../services/song.service';
 import { Song } from '../entities/song.entity';
 
@@ -25,5 +25,10 @@ export class SongController {
     @Get()
     async getSpecificSong(@Body() song: Partial<Song>): Promise<Song[]> {
         return this.songService.findSpecificSong(song.songName, song.band);
+    }
+
+    @Post()
+    async postSong(@Body() song: Song): Promise<Song> {
+        return this.songService.addSong(song);
     }
 }
