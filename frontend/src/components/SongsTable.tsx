@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 interface Song {
-  id: number;
+  id?: number;
   bandName: string;
   songName: string;
   year: number;
