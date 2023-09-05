@@ -6,8 +6,7 @@ export interface Song {
     songName: string;
     year: number;  
   }
-
-const BASE_URL = 'http://localhost:3000/songs';  
+const BASE_URL = process.env.REACT_APP_BACKEND_URL + '/songs';  
 
 // Fetch all songs
 export const getAllSongs = async (): Promise<Song[]> => {
