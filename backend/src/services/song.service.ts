@@ -18,6 +18,12 @@ export class SongService {
         const readStream = fs.createReadStream(filePath);
         readStream.pipe(csv())
           .on('data', async (row) => {
+            // Check if values exist in the row, if not, skip or handle accordingly
+            if (!row["Song Name"] || !row.Band || !row.Year) {
+                console.warn('Missing value in row', row);
+                return; // Skip this row
+            }
+
             // Take the value from each column and attach it to to appropriate property
             // Also convert song details to lowercase
             const song = {
@@ -25,8 +31,19 @@ export class SongService {
               band: row.Band.toLowerCase(),
               year: Number(row.Year) 
             };
-      
-            await this.songRepository.save(song);
+
+            // Check 'year' to ensure it's a valid number
+            if (isNaN(song.year)) {
+                console.warn('Invalid year value in row', row);
+                return; // Skip this row
+            }
+
+            try{
+                await this.songRepository.save(song);
+            }catch(error){
+                // If cant save this row log the error and continue to nex row
+                console.error(`Error saving song: ${song.songName} by ${song.band}. Error: ${error.message}`);
+            }
           })
           .on('end', () => {
             console.log('CSV file successfully processed');
