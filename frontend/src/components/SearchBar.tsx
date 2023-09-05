@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getSongsByBand, getSongsByYear, Song } from '../services/songService';
+import { getSongsByBand, getAllSongs, getAllSongsOrderByBand, getSongsByYear, Song } from '../services/songService';
 import SongsTable from './SongsTable'; 
 
 const SearchBar: React.FC = () => {
@@ -23,6 +23,22 @@ const SearchBar: React.FC = () => {
       console.error('Failed to fetch songs by year:', error);
     }
   };
+  const handleShowAllBandsByName = async () => {
+    try {
+      const data = await getAllSongsOrderByBand();
+      setResults(data);
+    } catch (error) {
+      console.error('Failed to fetch songs ordered by name:', error);
+    }
+  };
+  const handleShowAllBands = async () => {
+    try {
+      const data = await getAllSongs();
+      setResults(data);
+    } catch (error) {
+      console.error('Failed to fetch all bands:', error);
+    }
+  };
 
   return (
     <div>
@@ -34,7 +50,9 @@ const SearchBar: React.FC = () => {
       />
       <button onClick={handleSearchByBand}>Search by Band</button>
       <button onClick={handleSearchByYear}>Search by Year</button>
-    
+      <button onClick={handleShowAllBandsByName}>Show all bands ordered by name</button>
+      <button onClick={handleShowAllBands}>Show all bands</button>
+
       <SongsTable songsData={results} />
     </div>
   );
