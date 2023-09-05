@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { getSongsByBand, getAllSongs, getAllSongsOrderByBand, getSongsByYear, Song } from '../services/songService';
 import SongsTable from './SongsTable'; 
 
-const SearchBar: React.FC = () => {
+const SearchSongs: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<Song[]>([]);
 
@@ -67,4 +67,4 @@ const SearchBar: React.FC = () => {
   );
 };
 
-export default SearchBar;
+export default SearchSongs;
