@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
+import AddSongForm from './components/AddSongForm';
 import SearchSongs from './components/SearchSongs';
+import NavigationBar from './components/NavigationBar';
 
 function App() {
+  const [showAddSong, setShowAddSong] = useState(false);
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-medium mb-4">Song Search</h1>
-      <SearchSongs />
+    <div className="flex flex-col items-center justify-between">
+      <NavigationBar setShowAddSong={setShowAddSong} />
+      <div className="container mx-auto p-4">
+        {showAddSong ? <AddSongForm /> : <SearchSongs />}
+      </div>
     </div>
   );
-}
+};
 
 export default App;

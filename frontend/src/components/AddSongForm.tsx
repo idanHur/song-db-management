@@ -35,33 +35,59 @@ const AddSongForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Song Name:</label>
-        <input 
-          type="text"
-          value={songName}
-          onChange={(e) => setSongName(e.target.value)}
-        />
+    <div className="flex flex-col items-center h-screen pt-1/4">
+      <div className="flex flex-col items-center justify-center w-full max-w-xs">
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="songName">
+              Song Name:
+            </label>
+            <input 
+              id="songName"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              placeholder="Enter Song Name"
+              value={songName}
+              onChange={(e) => setSongName(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="band">
+              Band Name:
+            </label>
+            <input 
+              id="band"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              placeholder="Enter Band Name"
+              value={band}
+              onChange={(e) => setBand(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="year">
+              Year:
+            </label>
+            <input 
+              id="year"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              placeholder="Enter Year"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <button 
+              type="submit" 
+              className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Add Song
+            </button>
+          </div>
+        </form>
       </div>
-      <div>
-        <label>Band Name:</label>
-        <input 
-          type="text"
-          value={band}
-          onChange={(e) => setBand(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Year:</label>
-        <input 
-          type="text"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-        />
-      </div>
-      <button type="submit">Add Song</button>
-    </form>
+    </div>
+
   );
 }
 

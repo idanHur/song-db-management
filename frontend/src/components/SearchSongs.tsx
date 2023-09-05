@@ -53,13 +53,13 @@ const SearchSongs: React.FC = () => {
         />
       </div>
       <div className='flex flex-col md:flex-row items-center self-center my-2'>
-        <button className='bg-blue-500 hover:bg-blue-600 hover:scale-105 text-white font-bold py-2 px-4 md:mr-1 md:mb-0 mb-1 rounded-lg' 
+        <button className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:mr-1 md:mb-0 mb-1 rounded-lg' 
         onClick={handleSearchByBand}>Search by Band</button>
-        <button className='bg-blue-500 hover:bg-blue-600 hover:scale-105 text-white font-bold py-2 px-4 md:mx-1 md:my-0 my-1 rounded-lg' 
+        <button className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:mx-1 md:my-0 my-1 rounded-lg' 
         onClick={handleSearchByYear}>Search by Year</button>
-        <button className='bg-blue-500 hover:bg-blue-600 hover:scale-105 text-white font-bold py-2 px-4 md:mx-1 md:my-0 my-1 rounded-lg' 
+        <button className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:mx-1 md:my-0 my-1 rounded-lg' 
         onClick={handleShowAllBandsByName}>Show all bands ordered by name</button>
-        <button className='bg-blue-500 hover:bg-blue-600 hover:scale-105 text-white font-bold py-2 px-4 md:ml-1 md:mt-0 mt-1 rounded-lg' 
+        <button className='bg-teal-500 hover:bg-teal-600 hover:scale-105 text-white font-bold py-2 px-4 md:ml-1 md:mt-0 mt-1 rounded-lg' 
         onClick={handleShowAllBands}>Show all bands</button>
       </div>
       <SongsTable songsData={results} />
