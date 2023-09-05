@@ -18,37 +18,59 @@ export class SongService {
         const readStream = fs.createReadStream(filePath);
         readStream.pipe(csv())
           .on('data', async (row) => {
-            // Check if values exist in the row, if not, skip or handle accordingly
-            if (!row["Song Name"] || !row.Band || !row.Year) {
-                console.warn('Missing value in row', row);
-                return; // Skip this row
-            }
-
-            // Take the value from each column and attach it to to appropriate property
-            // Also convert song details to lowercase
-            const song = {
-              songName: row["Song Name"].toLowerCase(),
-              band: row.Band.toLowerCase(),
-              year: Number(row.Year) 
-            };
-
-            // Check 'year' to ensure it's a valid number
-            if (isNaN(song.year)) {
-                console.warn('Invalid year value in row', row);
-                return; // Skip this row
-            }
-
-            try{
-                await this.songRepository.save(song);
-            }catch(error){
-                // If cant save this row log the error and continue to nex row
-                console.error(`Error saving song: ${song.songName} by ${song.band}. Error: ${error.message}`);
-            }
+              if (!this.validateRowData(row)) return;
+    
+              const song = {
+                  songName: row["Song Name"].toLowerCase(),
+                  band: row.Band.toLowerCase(),
+                  year: Number(row.Year) 
+              };
+    
+              if (await this.isSongInRepository(song)) {
+                  console.warn(`Song already exists: ${song.songName} by ${song.band}`);
+                  return;
+              }
+    
+              await this.saveSongToRepository(song);
           })
           .on('end', () => {
             console.log('CSV file successfully processed');
           });
-      }
+    }
+    
+    private validateRowData(row: any): boolean {
+        if (!row["Song Name"] || !row.Band || !row.Year) {
+            console.warn('Missing value in row', row);
+            return false;
+        }
+    
+        const year = Number(row.Year);
+        if (isNaN(year)) {
+            console.warn('Invalid year value in row', row);
+            return false;
+        }
+        return true;
+    }
+    
+    private async isSongInRepository(song: Song): Promise<boolean> {
+        const existingSong = await this.songRepository.findOne({
+            where: {
+                songName: song.songName,
+                band: song.band,
+                year: song.year
+            }
+        });
+        return !!existingSong;
+    }
+    
+    private async saveSongToRepository(song: Song): Promise<void> {
+        try {
+            await this.songRepository.save(song);
+        } catch(error) {
+            console.error(`Error saving song: ${song.songName} by ${song.band}. Error: ${error.message}`);
+        }
+    }
+    
 
       async findAll(): Promise<Song[]> {
         return await this.songRepository.find();
