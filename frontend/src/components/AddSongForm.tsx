@@ -1,4 +1,3 @@
-// AddSongForm.tsx
 import React, { useState } from 'react';
 import { addSong, Song } from '../services/songService';
 
@@ -9,9 +8,23 @@ const AddSongForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Convert the year string to a number
+    const yearAsNumber = parseInt(year, 10);
 
+    // Check if yearAsNumber is a valid number
+    if (isNaN(yearAsNumber)) {
+        alert('Please enter a valid year.');
+        return;
+    }
+
+    const newSong: Song = {
+      songName: songName,
+      bandName: band,
+      year: yearAsNumber
+    }
     try {
-      await addSong({ songName, band, year });
+      await addSong(newSong);
+      // Clear the input fields after submitting
       setSongName('');
       setBand('');
       setYear('');
@@ -32,7 +45,7 @@ const AddSongForm: React.FC = () => {
         />
       </div>
       <div>
-        <label>Band:</label>
+        <label>Band Name:</label>
         <input 
           type="text"
           value={band}
@@ -44,7 +57,7 @@ const AddSongForm: React.FC = () => {
         <input 
           type="text"
           value={year}
-          onChange={(e) => setBand(e.target.value)}
+          onChange={(e) => setYear(e.target.value)}
         />
       </div>
       <button type="submit">Add Song</button>

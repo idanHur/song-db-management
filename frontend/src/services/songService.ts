@@ -1,6 +1,6 @@
 import { json } from "stream/consumers";
 
-interface Song {
+export interface Song {
     id?: number
     bandName: string;
     songName: string;
