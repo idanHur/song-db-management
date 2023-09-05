@@ -15,18 +15,18 @@ export class SongService implements OnModuleInit {
       ) {}
     onModuleInit() {
     // This method will be called once the module's dependencies are resolved
-    this.processCSV('../../../Song_list.csv');
+    this.processCSV('Song_list.csv');
     }
 
     async processCSV(filePath: string): Promise<void> {
-        const readStream = fs.createReadStream(filePath);
+        const readStream = fs.createReadStream(filePath, 'utf8');
         // Handle readStream errors
         readStream.on('error', (err) => {
             console.error('An error occurred while reading the file:', err.message);
             return;
         });
 
-        readStream.pipe(csv())
+        readStream.pipe(csv({ separator: ';' }))
             .on('data', async (row) => {
                 if (!this.validateRowData(row)) return;
 
