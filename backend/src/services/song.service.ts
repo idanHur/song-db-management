@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Song } from '../entities/song.entity';
@@ -6,36 +6,46 @@ import * as fs from 'fs';
 import * as csv from 'csv-parser';
 
 @Injectable()
-export class SongService {
+export class SongService implements OnModuleInit {
     constructor(
         @InjectRepository(Song)
           /* songRepository is the instance of the 
              Repository to handle DB operations for the Song entity. */
         private songRepository: Repository<Song>,
       ) {}
-      
-      async processCSV(filePath: string): Promise<void> {
+    onModuleInit() {
+    // This method will be called once the module's dependencies are resolved
+    this.processCSV('../../../Song_list.csv');
+    }
+
+    async processCSV(filePath: string): Promise<void> {
         const readStream = fs.createReadStream(filePath);
+        // Handle readStream errors
+        readStream.on('error', (err) => {
+            console.error('An error occurred while reading the file:', err.message);
+            return;
+        });
+
         readStream.pipe(csv())
-          .on('data', async (row) => {
-              if (!this.validateRowData(row)) return;
-    
-              const song = {
-                  songName: row["Song Name"].toLowerCase(),
-                  band: row.Band.toLowerCase(),
-                  year: Number(row.Year) 
-              };
-    
-              if (await this.isSongInRepository(song)) {
-                  console.warn(`Song already exists: ${song.songName} by ${song.band}`);
-                  return;
-              }
-    
-              await this.saveSongToRepository(song);
-          })
-          .on('end', () => {
+            .on('data', async (row) => {
+                if (!this.validateRowData(row)) return;
+
+                const song = {
+                    songName: row["Song Name"].toLowerCase(),
+                    band: row.Band.toLowerCase(),
+                    year: Number(row.Year) 
+                };
+
+                if (await this.isSongInRepository(song)) {
+                    console.warn(`Song already exists: ${song.songName} by ${song.band}`);
+                    return;
+                }
+
+                await this.saveSongToRepository(song);
+            })
+            .on('end', () => {
             console.log('CSV file successfully processed');
-          });
+            });
     }
     
     private validateRowData(row: any): boolean {
