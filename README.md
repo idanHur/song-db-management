@@ -59,14 +59,14 @@ In the root directory of this project, use the following command to build the Do
 
 This command will create and start the necessary containers based on the configurations provided in the docker-compose.yml file.
 
-3. Access the Application
+### 3. Access the Application
 
 Once the Docker containers are up and running, you can access the Song Database Management Application in your web browser:
 
 - Frontend: http://localhost:3001
 - Backend API: http://localhost:3000
 
-4. Use the Application
+### 4. Use the Application
 You can now use the application to search for songs, add new songs, and manage song data.
 
 ## Directory Structure
@@ -74,5 +74,4 @@ The project directory is structured as follows:
 
 - frontend: Contains the React-based frontend application.
 - backend: Contains the NestJS-based backend application.
-- database: Contains the MySQL database configuration and initialization files.
 - docker: Contains Docker configuration files.
