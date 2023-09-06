@@ -15,11 +15,12 @@ Welcome to the backend portion of the Song Database Management application. This
 The backend provides the following API endpoints for managing song data:
 
 - `GET /songs`: Retrieve a list of all songs.
-- `GET /songs/:bandName`: Retrieve songs by a specific band.
-- `GET /songs/:year`: Retrieve songs from a specific year.
-- `GET /songs/:songName/:bandName`: Retrieve a specific song by its name and band.
+- `GET /songs/order-by-band`: Retrieve all songs ordered by band.
+- `GET /songs/by-band/:bandName`: Retrieve songs by a specific band.
+- `GET /songs/by-year/:year`: Retrieve songs from a specific year.
+- `GET /songs/specific-song`: Retrieve a specific song by its name and band. (Query parameters: `songName` and `band`)
 - `POST /songs`: Add a new song to the database.
-- `DELETE /songs/:songName/:bandName`: Delete a specific song by its name and band.
+- `DELETE /songs`: Delete a specific song by its name and band. (Request body should include `songName` and `band` fields)
 
 ## Usage
 
